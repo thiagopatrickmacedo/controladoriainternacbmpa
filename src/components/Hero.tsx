@@ -2,8 +2,8 @@ import { Eye, FileCheck, TrendingUp } from "lucide-react";
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden text-white py-16" style={{ background: 'linear-gradient(135deg, #0A1F44 0%, #8B0000 100%)' }}>
-      <div className="container mx-auto px-4 relative z-10">
+    <section className="relative overflow-hidden text-white py-16 w-full" style={{ background: 'linear-gradient(135deg, #0A1F44 0%, #8B0000 100%)' }}>
+      <div className="container mx-auto px-4 relative z-10 max-w-full">
         <div className="text-center max-w-3xl mx-auto mb-12">
           <h2 className="text-white mb-4">Portal de Transparência e Monitoramento</h2>
           <p className="text-white/90">

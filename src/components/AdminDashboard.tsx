@@ -194,7 +194,7 @@ export function AdminDashboard({
         {/* Header do painel */}
         <div className="bg-gradient-to-r from-[#0A1F44] to-[#0A1F44]/90 p-4 sm:p-6 text-white">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <div className="flex items-center gap-3 sm:gap-4 w-full sm:w-auto">
+            <div className="flex items-center gap-3 sm:gap-4 w-full sm:w-auto min-w-0 flex-1">
               <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#C9A227] flex items-center justify-center flex-shrink-0">
                 <Shield className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
               </div>
@@ -225,24 +225,24 @@ export function AdminDashboard({
                 isFormOpen
                   ? "bg-[#8B0000] hover:bg-[#8B0000]/90"
                   : "bg-[#C9A227] hover:bg-[#C9A227]/90"
-              } text-white shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed w-full sm:w-auto text-sm sm:text-base`}
+              } text-white shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed w-full sm:w-auto text-sm sm:text-base flex-shrink-0`}
             >
               {isFormOpen ? (
                 <>
                   <X className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-                  Cancelar
+                  <span className="whitespace-nowrap">Cancelar</span>
                 </>
               ) : (
                 <>
                   <PlusCircle className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-                  Adicionar Vídeo
+                  <span className="whitespace-nowrap">Adicionar Vídeo</span>
                 </>
               )}
             </Button>
           </div>
         </div>
 
-        <div className="p-6">
+        <div className="p-4 sm:p-6">
           {categories.length === 0 && (
             <div className="mb-6 p-4 bg-[#C9A227]/10 border border-[#C9A227]/30 rounded-lg">
               <p className="text-sm text-[#333333] text-center">
@@ -429,12 +429,12 @@ export function AdminDashboard({
 
           {/* Lista de vídeos */}
           <div className="space-y-4">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-[#0A1F44]">
+            <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
+              <h3 className="text-[#0A1F44] text-sm sm:text-base">
                 Vídeos Publicados ({videos.length})
               </h3>
-              <div className="flex items-center gap-2 text-sm text-[#333333]/70">
-                <Star className="w-4 h-4 text-[#C9A227] fill-[#C9A227]" />
+              <div className="flex items-center gap-2 text-xs sm:text-sm text-[#333333]/70">
+                <Star className="w-3 h-3 sm:w-4 sm:h-4 text-[#C9A227] fill-[#C9A227]" />
                 <span>
                   {videos.filter((v) => v.featured).length} em destaque
                 </span>
@@ -454,11 +454,11 @@ export function AdminDashboard({
                 {videos.map((video) => (
                   <div
                     key={video.id}
-                    className="bg-white border border-[#C9A227]/20 rounded-lg p-4 hover:shadow-md transition-all"
+                    className="bg-white border border-[#C9A227]/20 rounded-lg p-3 sm:p-4 hover:shadow-md transition-all"
                   >
-                    <div className="flex items-start gap-4">
+                    <div className="flex flex-col sm:flex-row items-start gap-3 sm:gap-4">
                       {/* Thumbnail */}
-                      <div className="w-32 h-20 rounded overflow-hidden bg-[#F2F2F2] flex-shrink-0">
+                      <div className="w-full sm:w-32 aspect-video sm:h-20 rounded overflow-hidden bg-[#F2F2F2] flex-shrink-0">
                         <img
                           src={video.thumbnail}
                           alt={video.title}
@@ -467,23 +467,23 @@ export function AdminDashboard({
                       </div>
 
                       {/* Informações */}
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-start justify-between gap-4">
+                      <div className="flex-1 min-w-0 w-full">
+                        <div className="flex flex-col gap-3">
                           <div className="flex-1 min-w-0">
-                            <div className="flex items-center gap-2 mb-2">
-                              <h4 className="text-[#0A1F44] truncate">
+                            <div className="flex items-start gap-2 mb-2">
+                              <h4 className="text-[#0A1F44] text-sm sm:text-base line-clamp-2 flex-1">
                                 {video.title}
                               </h4>
                               {video.featured && (
                                 <Star className="w-4 h-4 text-[#C9A227] fill-[#C9A227] flex-shrink-0" />
                               )}
                             </div>
-                            <p className="text-sm text-[#333333]/70 line-clamp-2 mb-2">
+                            <p className="text-xs sm:text-sm text-[#333333]/70 line-clamp-2 mb-2">
                               {video.description}
                             </p>
-                            <div className="flex items-center gap-3 flex-wrap">
+                            <div className="flex items-center gap-2 flex-wrap">
                               <Badge
-                                className="text-white"
+                                className="text-white text-xs"
                                 style={{
                                   backgroundColor: getCategoryColor(
                                     video.category
@@ -506,7 +506,7 @@ export function AdminDashboard({
                           </div>
 
                           {/* Ações */}
-                          <div className="flex items-center gap-2 flex-shrink-0">
+                          <div className="flex items-center gap-2 flex-wrap sm:flex-nowrap">
                             <Button
                               size="sm"
                               variant="outline"
@@ -516,7 +516,7 @@ export function AdminDashboard({
                                   !(video.featured ?? false)
                                 )
                               }
-                              className={`border-[#C9A227] ${
+                              className={`border-[#C9A227] text-xs sm:text-sm flex-shrink-0 ${
                                 video.featured
                                   ? "bg-[#C9A227] text-white hover:bg-[#b08920]"
                                   : "text-[#C9A227] hover:bg-[#C9A227] hover:text-white"
@@ -528,26 +528,29 @@ export function AdminDashboard({
                               }
                             >
                               {video.featured ? (
-                                <StarOff className="w-4 h-4" />
+                                <StarOff className="w-3 h-3 sm:w-4 sm:h-4" />
                               ) : (
-                                <Star className="w-4 h-4" />
+                                <Star className="w-3 h-3 sm:w-4 sm:h-4" />
                               )}
+                              <span className="ml-1 sm:hidden">Destaque</span>
                             </Button>
                             <Button
                               size="sm"
                               variant="outline"
                               onClick={() => handleEdit(video)}
-                              className="border-[#0A1F44] text-[#0A1F44] hover:bg-[#0A1F44] hover:text-white transition-all"
+                              className="border-[#0A1F44] text-[#0A1F44] hover:bg-[#0A1F44] hover:text-white transition-all text-xs sm:text-sm flex-shrink-0"
                             >
-                              <Edit2 className="w-4 h-4" />
+                              <Edit2 className="w-3 h-3 sm:w-4 sm:h-4" />
+                              <span className="ml-1 sm:hidden">Editar</span>
                             </Button>
                             <Button
                               size="sm"
                               variant="outline"
                               onClick={() => setDeleteVideoId(video.id)}
-                              className="border-[#8B0000] text-[#8B0000] hover:bg-[#8B0000] hover:text-white transition-all"
+                              className="border-[#8B0000] text-[#8B0000] hover:bg-[#8B0000] hover:text-white transition-all text-xs sm:text-sm flex-shrink-0"
                             >
-                              <Trash2 className="w-4 h-4" />
+                              <Trash2 className="w-3 h-3 sm:w-4 sm:h-4" />
+                              <span className="ml-1 sm:hidden">Excluir</span>
                             </Button>
                           </div>
                         </div>

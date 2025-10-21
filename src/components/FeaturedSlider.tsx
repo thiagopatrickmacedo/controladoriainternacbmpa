@@ -42,8 +42,8 @@ export function FeaturedSlider({ videos, categories }: FeaturedSliderProps) {
   return (
     <>
       {featuredVideos.length > 0 && (
-        <section className="bg-gradient-to-br from-[#0A1F44] via-[#0A1F44] to-[#1a3a6e] py-12">
-          <div className="container mx-auto px-4">
+        <section className="bg-gradient-to-br from-[#0A1F44] via-[#0A1F44] to-[#1a3a6e] py-12 w-full overflow-hidden">
+          <div className="container mx-auto px-4 max-w-full">
             <div className="flex items-center gap-2 mb-6">
               <TrendingUp className="w-6 h-6 text-[#C9A227]" />
               <h2 className="text-white">Vídeos em Destaque</h2>
@@ -54,9 +54,9 @@ export function FeaturedSlider({ videos, categories }: FeaturedSliderProps) {
                 align: "start",
                 loop: true,
               }}
-              className="w-full"
+              className="w-full max-w-full"
             >
-              <CarouselContent className="-ml-4">
+              <CarouselContent className="-ml-2 md:-ml-4">
                 {featuredVideos.map((video) => {
                   const formattedDate = new Date(
                     video.publishDate
@@ -69,7 +69,7 @@ export function FeaturedSlider({ videos, categories }: FeaturedSliderProps) {
                   return (
                     <CarouselItem
                       key={video.id}
-                      className="pl-4 md:basis-1/2 lg:basis-1/3"
+                      className="pl-2 md:pl-4 basis-full sm:basis-1/2 lg:basis-1/3"
                     >
                       <div className="group relative overflow-hidden rounded-lg shadow-xl bg-white hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
                         {/* Thumbnail */}

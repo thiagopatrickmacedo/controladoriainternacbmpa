@@ -26,11 +26,11 @@ export function VideoGallery({ videos, categories }: VideoGalleryProps) {
   });
 
   return (
-    <section id="videos" className="py-12 bg-white">
-      <div className="container mx-auto px-4">
+    <section id="videos" className="py-12 bg-white w-full overflow-hidden">
+      <div className="container mx-auto px-4 max-w-full">
         <div className="mb-8">
           <h2 className="mb-4 text-[#0A1F44]">Biblioteca de Vídeos</h2>
-          <div className="relative max-w-md">
+          <div className="relative max-w-md w-full">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
             <Input
               type="text"
@@ -44,10 +44,10 @@ export function VideoGallery({ videos, categories }: VideoGalleryProps) {
 
         <Tabs
           defaultValue="todos"
-          className="w-full"
+          className="w-full max-w-full"
           onValueChange={(value: string) => setSelectedCategory(value)}
         >
-          <TabsList className="mb-8">
+          <TabsList className="mb-8 flex-wrap">
             <TabsTrigger value="todos">Todos</TabsTrigger>
             {categories.map((category) => (
               <TabsTrigger key={category.id} value={category.name}>

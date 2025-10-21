@@ -26,8 +26,8 @@ export function Footer({ footerConfig }: FooterProps) {
     ? [...footerConfig.contacts].sort((a, b) => a.order - b.order)
     : [];
   return (
-    <footer className="bg-[#0A1F44] text-white mt-auto">
-      <div className="container mx-auto px-4 py-12">
+    <footer className="bg-[#0A1F44] text-white mt-auto w-full overflow-hidden">
+      <div className="container mx-auto px-4 py-12 max-w-full">
         <div className="grid md:grid-cols-3 gap-8">
           <div>
             <div className="flex items-center gap-2 mb-4">
