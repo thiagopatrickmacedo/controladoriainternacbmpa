@@ -194,12 +194,12 @@ export function AdminDashboard({
         {/* Header do painel */}
         <div className="bg-gradient-to-r from-[#0A1F44] to-[#0A1F44]/90 p-4 sm:p-6 text-white">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <div className="flex items-center gap-3 sm:gap-4 w-full sm:w-auto min-w-0 flex-1">
+            <div className="flex items-center gap-3 sm:gap-4 w-full sm:w-auto">
               <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#C9A227] flex items-center justify-center flex-shrink-0">
                 <Shield className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
               </div>
               <div className="min-w-0 flex-1">
-                <h2 className="text-white mb-1 text-base sm:text-lg truncate">
+                <h2 className="text-white mb-1 text-base sm:text-lg">
                   {headingTitle}
                 </h2>
                 <p className="text-white/80 text-xs sm:text-sm leading-tight">
@@ -225,24 +225,24 @@ export function AdminDashboard({
                 isFormOpen
                   ? "bg-[#8B0000] hover:bg-[#8B0000]/90"
                   : "bg-[#C9A227] hover:bg-[#C9A227]/90"
-              } text-white shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed w-full sm:w-auto text-sm sm:text-base flex-shrink-0`}
+              } text-white shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed w-full sm:w-auto text-sm sm:text-base`}
             >
               {isFormOpen ? (
                 <>
                   <X className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-                  <span className="whitespace-nowrap">Cancelar</span>
+                  Cancelar
                 </>
               ) : (
                 <>
                   <PlusCircle className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-                  <span className="whitespace-nowrap">Adicionar Vídeo</span>
+                  Adicionar Vídeo
                 </>
               )}
             </Button>
           </div>
         </div>
 
-        <div className="p-4 sm:p-6">
+        <div className="p-6">
           {categories.length === 0 && (
             <div className="mb-6 p-4 bg-[#C9A227]/10 border border-[#C9A227]/30 rounded-lg">
               <p className="text-sm text-[#333333] text-center">
@@ -458,7 +458,7 @@ export function AdminDashboard({
                   >
                     <div className="flex flex-col sm:flex-row items-start gap-3 sm:gap-4">
                       {/* Thumbnail */}
-                      <div className="w-full sm:w-32 aspect-video sm:h-20 rounded overflow-hidden bg-[#F2F2F2] flex-shrink-0">
+                      <div className="w-full sm:w-32 aspect-video sm:aspect-auto sm:h-20 rounded overflow-hidden bg-[#F2F2F2] flex-shrink-0">
                         <img
                           src={video.thumbnail}
                           alt={video.title}
@@ -506,7 +506,7 @@ export function AdminDashboard({
                           </div>
 
                           {/* Ações */}
-                          <div className="flex items-center gap-2 flex-wrap sm:flex-nowrap">
+                          <div className="flex items-center gap-2 justify-start">
                             <Button
                               size="sm"
                               variant="outline"
@@ -516,11 +516,11 @@ export function AdminDashboard({
                                   !(video.featured ?? false)
                                 )
                               }
-                              className={`border-[#C9A227] text-xs sm:text-sm flex-shrink-0 ${
+                              className={`border-[#C9A227] ${
                                 video.featured
                                   ? "bg-[#C9A227] text-white hover:bg-[#b08920]"
                                   : "text-[#C9A227] hover:bg-[#C9A227] hover:text-white"
-                              } transition-all`}
+                              } transition-all flex-1 sm:flex-initial`}
                               title={
                                 video.featured
                                   ? "Remover do destaque"
@@ -532,25 +532,22 @@ export function AdminDashboard({
                               ) : (
                                 <Star className="w-3 h-3 sm:w-4 sm:h-4" />
                               )}
-                              <span className="ml-1 sm:hidden">Destaque</span>
                             </Button>
                             <Button
                               size="sm"
                               variant="outline"
                               onClick={() => handleEdit(video)}
-                              className="border-[#0A1F44] text-[#0A1F44] hover:bg-[#0A1F44] hover:text-white transition-all text-xs sm:text-sm flex-shrink-0"
+                              className="border-[#0A1F44] text-[#0A1F44] hover:bg-[#0A1F44] hover:text-white transition-all flex-1 sm:flex-initial"
                             >
                               <Edit2 className="w-3 h-3 sm:w-4 sm:h-4" />
-                              <span className="ml-1 sm:hidden">Editar</span>
                             </Button>
                             <Button
                               size="sm"
                               variant="outline"
                               onClick={() => setDeleteVideoId(video.id)}
-                              className="border-[#8B0000] text-[#8B0000] hover:bg-[#8B0000] hover:text-white transition-all text-xs sm:text-sm flex-shrink-0"
+                              className="border-[#8B0000] text-[#8B0000] hover:bg-[#8B0000] hover:text-white transition-all flex-1 sm:flex-initial"
                             >
                               <Trash2 className="w-3 h-3 sm:w-4 sm:h-4" />
-                              <span className="ml-1 sm:hidden">Excluir</span>
                             </Button>
                           </div>
                         </div>
