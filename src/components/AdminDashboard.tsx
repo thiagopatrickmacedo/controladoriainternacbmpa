@@ -199,7 +199,7 @@ export function AdminDashboard({
                 <Shield className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
               </div>
               <div className="min-w-0 flex-1">
-                <h2 className="text-white mb-1 text-base sm:text-lg">
+                <h2 className="text-white mb-1 text-base sm:text-lg truncate">
                   {headingTitle}
                 </h2>
                 <p className="text-white/80 text-xs sm:text-sm leading-tight">
