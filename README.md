@@ -112,9 +112,39 @@ cd controladoriainternacbmpa
 ### 2️⃣ Instale as dependências
 
 ```bash
----
+npm install
+```
 
-<!-- Bloco institucional e trecho de configuração removidos por solicitação do mantenedor -->
+### 3️⃣ Configure o Firebase
+
+1. Crie um projeto no [Firebase Console](https://console.firebase.google.com/)
+2. Ative os seguintes serviços:
+   - Authentication (Google Provider)
+   - Firestore Database
+   - Hosting
+3. Copie as credenciais do Firebase
+4. Atualize o arquivo `src/lib/firebase.ts` com suas credenciais:
+
+```typescript
+const firebaseConfig = {
+  apiKey: "SUA_API_KEY",
+  authDomain: "SEU_AUTH_DOMAIN",
+  projectId: "SEU_PROJECT_ID",
+  storageBucket: "SEU_STORAGE_BUCKET",
+  messagingSenderId: "SEU_MESSAGING_SENDER_ID",
+  appId: "SEU_APP_ID"
+};
+```
+
+5. Configure as regras de segurança do Firestore (arquivo `firestore.rules` já incluído)
+
+### 4️⃣ Execute o projeto localmente
+
+```bash
+npm run dev
+```
+
+Acesse em: `http://localhost:5173`
 
 ---
 
@@ -337,33 +367,4 @@ Para mais informações, visite: [https://controladoria-interna-cbmpa.web.app/](
 
 ---
 
-<div align="center">
-  
-  **Feito com ❤️ pela Controladoria Interna do CBMPA**
-  
-  ⭐ Se este projeto foi útil, considere dar uma estrela!
-
-</div>
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+<!-- Footer institucional removido conforme solicitado pelo mantenedor -->
