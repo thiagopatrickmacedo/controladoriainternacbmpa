@@ -10,6 +10,7 @@ import { CategoryManager } from "./components/CategoryManager";
 import { UserManager } from "./components/UserManager";
 import { FooterManager } from "./components/FooterManager";
 import { Toaster } from "./components/ui/sonner";
+import { ChevronDown } from "lucide-react";
 import { getYouTubeThumbnail, normalizeVideoUrl } from "./utils/videoHelpers";
 import type {
   Category,
@@ -92,6 +93,11 @@ export default function App() {
   const [videos, setVideos] = useState<Video[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [footerConfig, setFooterConfig] = useState<FooterConfig | null>(null);
+
+  // Estados para controlar seções expansíveis no mobile
+  const [isCategoryOpen, setIsCategoryOpen] = useState(false);
+  const [isUserOpen, setIsUserOpen] = useState(false);
+  const [isFooterOpen, setIsFooterOpen] = useState(false);
 
   const handleLogin = (role: UserRole) => {
     setUserRole(role);
@@ -207,7 +213,9 @@ export default function App() {
     try {
       const footerDocRef = doc(db, "footerConfig", "default");
       const footerDoc = await getDoc(footerDocRef);
-      const currentLinks = footerDoc.exists() ? footerDoc.data()?.links || [] : [];
+      const currentLinks = footerDoc.exists()
+        ? footerDoc.data()?.links || []
+        : [];
       const newLink = { ...link, id: Date.now().toString() };
       await setDoc(
         footerDocRef,
@@ -230,7 +238,9 @@ export default function App() {
     try {
       const footerDocRef = doc(db, "footerConfig", "default");
       const footerDoc = await getDoc(footerDocRef);
-      const currentLinks = footerDoc.exists() ? footerDoc.data()?.links || [] : [];
+      const currentLinks = footerDoc.exists()
+        ? footerDoc.data()?.links || []
+        : [];
       const updatedLinks = currentLinks.map((l: FooterLink) =>
         l.id === id ? { ...link, id } : l
       );
@@ -246,7 +256,9 @@ export default function App() {
     try {
       const footerDocRef = doc(db, "footerConfig", "default");
       const footerDoc = await getDoc(footerDocRef);
-      const currentLinks = footerDoc.exists() ? footerDoc.data()?.links || [] : [];
+      const currentLinks = footerDoc.exists()
+        ? footerDoc.data()?.links || []
+        : [];
       const updatedLinks = currentLinks.filter((l: FooterLink) => l.id !== id);
       await setDoc(footerDocRef, { links: updatedLinks }, { merge: true });
       toast.success("Link removido!");
@@ -256,13 +268,13 @@ export default function App() {
     }
   };
 
-  const handleAddFooterContact = async (
-    contact: Omit<FooterContact, "id">
-  ) => {
+  const handleAddFooterContact = async (contact: Omit<FooterContact, "id">) => {
     try {
       const footerDocRef = doc(db, "footerConfig", "default");
       const footerDoc = await getDoc(footerDocRef);
-      const currentContacts = footerDoc.exists() ? footerDoc.data()?.contacts || [] : [];
+      const currentContacts = footerDoc.exists()
+        ? footerDoc.data()?.contacts || []
+        : [];
       const newContact = { ...contact, id: Date.now().toString() };
       await setDoc(
         footerDocRef,
@@ -285,11 +297,17 @@ export default function App() {
     try {
       const footerDocRef = doc(db, "footerConfig", "default");
       const footerDoc = await getDoc(footerDocRef);
-      const currentContacts = footerDoc.exists() ? footerDoc.data()?.contacts || [] : [];
+      const currentContacts = footerDoc.exists()
+        ? footerDoc.data()?.contacts || []
+        : [];
       const updatedContacts = currentContacts.map((c: FooterContact) =>
         c.id === id ? { ...contact, id } : c
       );
-      await setDoc(footerDocRef, { contacts: updatedContacts }, { merge: true });
+      await setDoc(
+        footerDocRef,
+        { contacts: updatedContacts },
+        { merge: true }
+      );
       toast.success("Contato atualizado!");
     } catch (error) {
       console.error("Erro ao atualizar contato:", error);
@@ -301,11 +319,17 @@ export default function App() {
     try {
       const footerDocRef = doc(db, "footerConfig", "default");
       const footerDoc = await getDoc(footerDocRef);
-      const currentContacts = footerDoc.exists() ? footerDoc.data()?.contacts || [] : [];
+      const currentContacts = footerDoc.exists()
+        ? footerDoc.data()?.contacts || []
+        : [];
       const updatedContacts = currentContacts.filter(
         (c: FooterContact) => c.id !== id
       );
-      await setDoc(footerDocRef, { contacts: updatedContacts }, { merge: true });
+      await setDoc(
+        footerDocRef,
+        { contacts: updatedContacts },
+        { merge: true }
+      );
       toast.success("Contato removido!");
     } catch (error) {
       console.error("Erro ao remover contato:", error);
@@ -474,6 +498,7 @@ export default function App() {
       {isLoggedIn && (userRole === "admin" || userRole === "publisher") && (
         <div className="bg-[#F2F2F2] py-8">
           <div className="container mx-auto px-4 space-y-6">
+            {/* Painel Administrativo sempre visível */}
             <AdminDashboard
               videos={videos}
               categories={categories}
@@ -483,31 +508,97 @@ export default function App() {
               onToggleFeatured={handleToggleFeatured}
               userRole={userRole}
             />
-            <CategoryManager
-              categories={categories}
-              onAddCategory={handleAddCategory}
-              onEditCategory={handleEditCategory}
-              onDeleteCategory={handleDeleteCategory}
-            />
-            {userRole === "admin" && (
-              <>
-                <UserManager
-                  users={users}
-                  currentUserId={userProfile?.uid}
-                  onChangeRole={handleChangeUserRole}
-                />
-                <FooterManager
-                  footerConfig={footerConfig}
-                  onUpdateDescription={handleUpdateFooterDescription}
-                  onAddLink={handleAddFooterLink}
-                  onEditLink={handleEditFooterLink}
-                  onDeleteLink={handleDeleteFooterLink}
-                  onAddContact={handleAddFooterContact}
-                  onEditContact={handleEditFooterContact}
-                  onDeleteContact={handleDeleteFooterContact}
-                />
-              </>
-            )}
+
+            {/* Layout com Accordion para Desktop e Mobile */}
+            <div className="space-y-4">
+              {/* Gerenciar Categorias */}
+              <div className="bg-white rounded-lg shadow-lg border border-[#0A1F44]/10 overflow-hidden">
+                <button
+                  onClick={() => setIsCategoryOpen(!isCategoryOpen)}
+                  className="w-full px-5 py-4 flex items-center justify-between bg-[#0A1F44] text-white hover:bg-[#0A1F44]/90 transition-colors"
+                >
+                  <span className="font-semibold text-sm sm:text-base">
+                    Gerenciar Categorias
+                  </span>
+                  <ChevronDown
+                    className={`w-5 h-5 transition-transform duration-200 ${
+                      isCategoryOpen ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+                {isCategoryOpen && (
+                  <div className="p-5">
+                    <CategoryManager
+                      categories={categories}
+                      onAddCategory={handleAddCategory}
+                      onEditCategory={handleEditCategory}
+                      onDeleteCategory={handleDeleteCategory}
+                    />
+                  </div>
+                )}
+              </div>
+
+              {userRole === "admin" && (
+                <>
+                  {/* Gerenciar Usuários */}
+                  <div className="bg-white rounded-lg shadow-lg border border-[#0A1F44]/10 overflow-hidden">
+                    <button
+                      onClick={() => setIsUserOpen(!isUserOpen)}
+                      className="w-full px-5 py-4 flex items-center justify-between bg-[#0A1F44] text-white hover:bg-[#0A1F44]/90 transition-colors"
+                    >
+                      <span className="font-semibold text-sm sm:text-base">
+                        Gerenciar Usuários
+                      </span>
+                      <ChevronDown
+                        className={`w-5 h-5 transition-transform duration-200 ${
+                          isUserOpen ? "rotate-180" : ""
+                        }`}
+                      />
+                    </button>
+                    {isUserOpen && (
+                      <div className="p-5">
+                        <UserManager
+                          users={users}
+                          currentUserId={userProfile?.uid}
+                          onChangeRole={handleChangeUserRole}
+                        />
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Gerenciar Rodapé */}
+                  <div className="bg-white rounded-lg shadow-lg border border-[#0A1F44]/10 overflow-hidden">
+                    <button
+                      onClick={() => setIsFooterOpen(!isFooterOpen)}
+                      className="w-full px-5 py-4 flex items-center justify-between bg-[#0A1F44] text-white hover:bg-[#0A1F44]/90 transition-colors"
+                    >
+                      <span className="font-semibold text-sm sm:text-base">
+                        Gerenciar Rodapé
+                      </span>
+                      <ChevronDown
+                        className={`w-5 h-5 transition-transform duration-200 ${
+                          isFooterOpen ? "rotate-180" : ""
+                        }`}
+                      />
+                    </button>
+                    {isFooterOpen && (
+                      <div className="p-5">
+                        <FooterManager
+                          footerConfig={footerConfig}
+                          onUpdateDescription={handleUpdateFooterDescription}
+                          onAddLink={handleAddFooterLink}
+                          onEditLink={handleEditFooterLink}
+                          onDeleteLink={handleDeleteFooterLink}
+                          onAddContact={handleAddFooterContact}
+                          onEditContact={handleEditFooterContact}
+                          onDeleteContact={handleDeleteFooterContact}
+                        />
+                      </div>
+                    )}
+                  </div>
+                </>
+              )}
+            </div>
           </div>
         </div>
       )}

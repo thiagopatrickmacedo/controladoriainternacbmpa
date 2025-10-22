@@ -66,43 +66,45 @@ export function Header({
               <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
                 {roleLabel && (
                   <div
-                    className={`flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm flex-shrink-0 ${
+                    className={`flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium flex-shrink-0 ${
                       userRole === "admin"
                         ? "bg-[#8B0000]"
                         : "bg-[#C9A227] text-[#0A1F44]"
                     }`}
                   >
                     {userRole === "admin" ? (
-                      <UserCog className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
+                      <UserCog className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
                     ) : (
-                      <Film className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
+                      <Film className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
                     )}
-                    <span className="hidden xs:inline whitespace-nowrap">{roleLabel}</span>
+                    <span className="whitespace-nowrap text-[11px] sm:text-sm">
+                      {roleLabel}
+                    </span>
                   </div>
                 )}
                 {userName && (
-                  <span className="hidden sm:inline text-xs sm:text-sm text-white/80 max-w-[140px] truncate">
+                  <span className="hidden md:inline text-xs sm:text-sm text-white/80 max-w-[140px] truncate">
                     {userName}
                   </span>
                 )}
                 <Button
                   onClick={onLogoutClick}
                   variant="outline"
-                  className="bg-transparent border-white/30 hover:bg-white/10 text-white text-xs sm:text-sm px-2 sm:px-3 flex-shrink-0"
+                  className="bg-transparent border-white/30 hover:bg-white/10 hover:border-white/50 text-white text-xs sm:text-sm px-3 sm:px-4 h-9 sm:h-10 flex-shrink-0 font-medium transition-all"
                   size="sm"
                 >
-                  <LogOut className="w-3 h-3 sm:w-4 sm:h-4 sm:mr-2" />
-                  <span className="hidden sm:inline whitespace-nowrap">Sair</span>
+                  <LogOut className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1.5 sm:mr-2" />
+                  <span className="whitespace-nowrap">Sair</span>
                 </Button>
               </div>
             ) : (
               <Button
                 onClick={onLoginClick}
-                className="bg-[#C9A227] hover:bg-[#C9A227]/90 text-white text-xs sm:text-sm px-3 sm:px-4 flex-shrink-0"
+                className="bg-[#C9A227] hover:bg-[#A08420] text-white text-xs sm:text-sm px-4 sm:px-5 h-9 sm:h-10 flex-shrink-0 font-medium shadow-md hover:shadow-lg transition-all"
                 size="sm"
               >
-                <LogIn className="w-3 h-3 sm:w-4 sm:h-4 sm:mr-2" />
-                <span className="hidden sm:inline whitespace-nowrap">Entrar</span>
+                <LogIn className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1.5 sm:mr-2" />
+                <span className="whitespace-nowrap">Entrar</span>
               </Button>
             )}
           </div>
